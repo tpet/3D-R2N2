@@ -138,7 +138,10 @@ class ReconstructionDataProcess(DataProcess):
             # load each data instance
             for batch_id, db_ind in enumerate(db_inds):
                 category, model_id = self.data_paths[db_ind]
-                image_ids = np.random.choice(cfg.TRAIN.NUM_RENDERING, curr_n_views)
+                if cfg.TRAIN.RANDOM_VIEW_ORDER:
+                    image_ids = np.random.choice(cfg.TRAIN.NUM_RENDERING, curr_n_views)
+                else:
+                    image_ids = np.arange(0, curr_n_views)
 
                 # load multi view images
                 for view_id, image_id in enumerate(image_ids):
