@@ -1,0 +1,24 @@
+# Kitti dataset layout (symlinks to flat layout)
+# ./data/kitti/00001/label.binvox
+# ./data/kitti/00001/renderings.txt
+# ./data/kitti/00001/00.png
+# ./data/kitti/00001/01.png
+# ...
+# ./data/kitti/00005/label.binvox
+# ...
+DIR:
+    # data_io.py: Used with single category id 'kitti' (from kitti.json) to list examples ('00001' etc.).
+    SHAPENET_QUERY_PATH = './data'
+    # data_io.py: (category, model_id)
+    VOXEL_PATH: './data/{0}/{1}/label.binvox'
+    # data_io.py: return os.path.join(cfg.DIR.RENDERING_PATH % (category, model_id), '%02d.png' % rendering_id)
+    # rendering_id are generated from NUM_RENDERING
+    RENDERING_PATH: './data/{0}/{1}'
+CONST:
+    IMG_W: 160
+    IMG_H: 120
+    # data_process.py: Number of views to be used, should be fixed and equal to the number of rendered depths.
+    N_VIEWS: 5
+TRAIN
+    # data_process.py: Number of renderings per model
+    NUM_RENDERING: 5

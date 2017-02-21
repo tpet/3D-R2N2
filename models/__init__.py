@@ -1,7 +1,8 @@
 from models.gru_net import GRUNet
 from models.res_gru_net import ResidualGRUNet
+from models.kitti_depth_res_gru_net import KittiDepthResGRUNet
 
-MODELS = (GRUNet, ResidualGRUNet)
+MODELS = (GRUNet, ResidualGRUNet, KittiDepthResGRUNet)
 
 
 def get_models():
