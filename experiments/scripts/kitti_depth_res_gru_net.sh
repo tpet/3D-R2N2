@@ -22,6 +22,7 @@ python main.py \
       --iter 60000 \
       --out $OUT_PATH \
       --model $NET_NAME \
+      --cfg experiments/cfgs/kitti_depth.yaml \
       ${*:1}
 
 python main.py \
@@ -30,4 +31,5 @@ python main.py \
       --out $OUT_PATH \
       --weights $OUT_PATH/weights.npy \
       --model $NET_NAME \
+      --cfg experiments/cfgs/kitti_depth.yaml \
       ${*:1}
