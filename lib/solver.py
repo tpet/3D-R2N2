@@ -213,9 +213,8 @@ class Solver(object):
             print('Compiling testing function')
             # Lazy load the test function
             self._test_output = theano.function([self.net.x, self.net.y],
-                                                [self.net.output,
-                                                 self.net.loss,
-                                                 *self.net.activations])
+                                                [self.net.output, self.net.loss] + self.net.activations)
+                                                 # self.net.loss, *self.net.activations])
 
         # If the ground truth data is given, evaluate loss. O.w. feed zeros and
         # does not return the loss
