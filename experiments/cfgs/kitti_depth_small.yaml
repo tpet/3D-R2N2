@@ -22,7 +22,7 @@ CONST:
     IMG_DEPTH: True
     IMG_W: 160
     IMG_H: 120
-    N_VOX: [320, 32, 320]
+    N_VOX: [32, 32, 32]
     # data_process.py: Number of views to be used, should be fixed and equal to the number of rendered depths.
     N_VIEWS: 5
 TRAIN:

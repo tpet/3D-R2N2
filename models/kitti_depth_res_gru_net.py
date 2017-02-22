@@ -22,13 +22,14 @@ class KittiDepthResGRUNet(Net):
         img_w = self.img_w
         img_h = self.img_h
         # n_gru_vox = 4
-        n_gru_vox = (4, 40, 40)
-        # n_vox = self.n_vox
+        # Allow various sizes along dimensions.
+        # Use GRU size according to the voxel label size.
+        n_gru_vox = tuple(x // 8 for x in self.n_vox)
 
         n_convfilter = [96, 128, 256, 256, 256, 256]
         n_fc_filters = [1024]
         n_deconvfilter = [128, 128, 128, 64, 32, 2]
-        input_shape = (self.batch_size, 1, img_w, img_h)
+        input_shape = (self.batch_size, 1, img_h, img_w)
 
         # To define weights, define the network structure first
         x = InputLayer(input_shape)
@@ -205,3 +206,4 @@ class KittiDepthResGRUNet(Net):
         self.params = get_trainable_params()
         self.output = softmax_loss.prediction()
         self.activations = [update_all]
+
