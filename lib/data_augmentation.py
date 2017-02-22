@@ -53,6 +53,10 @@ def add_random_color_background(im, color_range):
 
 
 def preprocess_img(im, train=True):
+    if cfg.CONST.IMG_DEPTH:
+        im = np.array(im)[:, :, None].astype(np.float32) / 2.0**16
+        return im
+    
     # add random background
     im = add_random_color_background(im, cfg.TRAIN.NO_BG_COLOR_RANGE if train else
                                      cfg.TEST.NO_BG_COLOR_RANGE)
