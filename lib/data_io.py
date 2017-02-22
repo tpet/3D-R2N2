@@ -52,4 +52,5 @@ def get_voxel_file(category, model_id):
 
 
 def get_rendering_file(category, model_id, rendering_id):
-    return os.path.join(cfg.DIR.RENDERING_PATH.format(category, model_id), '%02d.png'.format(rendering_id))
+    return os.path.join(cfg.DIR.RENDERING_PATH.format(category, model_id), '{:02d}.png'.format(rendering_id))
+
