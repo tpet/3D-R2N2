@@ -13,3 +13,7 @@ output/
 
 # virtualenv
 py3
+
+# Datasets
+data
+ShapeNet
