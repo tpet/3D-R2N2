@@ -112,10 +112,10 @@ class ReconstructionDataProcess(DataProcess):
     @print_error
     def run(self):
         # set up constants
-        img_h = cfg.CONST.IMG_W
-        img_w = cfg.CONST.IMG_H
+        img_h = cfg.CONST.IMG_H
+        img_w = cfg.CONST.IMG_W
         n_vox = cfg.CONST.N_VOX
-
+        
         # This is the maximum number of views
         n_views = cfg.CONST.N_VIEWS
 
@@ -130,10 +130,11 @@ class ReconstructionDataProcess(DataProcess):
                 curr_n_views = n_views
 
             # This will be fed into the queue. create new batch everytime
+            img_c = 1 if cfg.CONST.IMG_DEPTH else 3
             batch_img = np.zeros(
-                (curr_n_views, self.batch_size, 3, img_h, img_w), dtype=theano.config.floatX)
+                (curr_n_views, self.batch_size, img_c, img_h, img_w), dtype=theano.config.floatX)
             batch_voxel = np.zeros(
-                (self.batch_size, n_vox, 2, n_vox, n_vox), dtype=theano.config.floatX)
+                (self.batch_size, n_vox[0], 2, n_vox[1], n_vox[2]), dtype=theano.config.floatX)
 
             # load each data instance
             for batch_id, db_ind in enumerate(db_inds):
