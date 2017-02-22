@@ -145,7 +145,11 @@ def read_as_3d_array(fp, fix_coords=True):
     # k -> z
     values, counts = raw_data[::2], raw_data[1::2]
     data = np.repeat(values, counts).astype(np.bool)
-    data = data.reshape(dims)
+    # Order dimensions prior to reshape according to http://www.patrickmin.com/binvox/binvox.html.
+    # Dimensions in header corresponds to x (aka depth), y (aka width), z (aka height),
+    # but the linear ordering is such that x changes slowest, z faster, and y fastest.
+    # data = data.reshape(dims)
+    data = data.reshape((dims[0], dims[2], dims[1]))  # xzy
     if fix_coords:
         # xzy to xyz TODO the right thing
         data = np.transpose(data, (0, 2, 1))
