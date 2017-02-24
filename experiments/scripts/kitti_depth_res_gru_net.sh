@@ -3,23 +3,24 @@
 set -x
 set -e
 
-export CUDA_VISIBLE_DEVICES=
+# export CUDA_VISIBLE_DEVICES=
 export PYTHONUNBUFFERED="True"
 
 NET_NAME=KittiDepthResGRUNet
-EXP_DETAIL=default_model
+EXP_DETAIL=kitti_depth_vox64
 OUT_PATH='./output/'$NET_NAME/$EXP_DETAIL
 LOG="$OUT_PATH/log.`date +'%Y-%m-%d_%H-%M-%S'`"
 # CFG=experiments/cfgs/kitti_depth.yaml
-CFG=experiments/cfgs/kitti_depth_small.yaml
+# CFG=experiments/cfgs/kitti_depth_small.yaml
+CFG=experiments/cfgs/kitti_depth_vox64.yaml
 
 # Make the dir if it not there
 mkdir -p $OUT_PATH
 exec &> >(tee -a "$LOG")
 echo Logging output to "$LOG"
 
-# export THEANO_FLAGS="floatX=float32,device=gpu,assert_no_cpu_op='raise'"
-export THEANO_FLAGS="floatX=float32,device=cpu,assert_no_cpu_op='raise'"
+export THEANO_FLAGS="floatX=float32,device=gpu,assert_no_cpu_op='raise'"
+# export THEANO_FLAGS="floatX=float32,device=cpu,assert_no_cpu_op='raise'"
 # Debug flags
 # export THEANO_FLAGS="$THEANO_FLAGS,optimizer=fast_compile"
 # export THEANO_FLAGS="$THEANO_FLAGS,optimizer=None"
@@ -27,8 +28,8 @@ export THEANO_FLAGS="floatX=float32,device=cpu,assert_no_cpu_op='raise'"
 
 # --batch-size 24 \
 python main.py \
-      --batch-size 8 \
-      --iter 60000 \
+      --batch-size 1 \
+      --iter 26810 \
       --out $OUT_PATH \
       --model $NET_NAME \
       --cfg $CFG \

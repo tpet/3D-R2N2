@@ -21,21 +21,22 @@ CONST:
     IMG_DEPTH: True
     IMG_W: 160
     IMG_H: 120
-    N_VOX: [320, 32, 320]
+    N_VOX: [64, 64, 32]
     # data_process.py: Number of views to be used, should be fixed and equal to the number of rendered depths.
     N_VIEWS: 5
 QUEUE_SIZE: 15
 TRAIN:
     DATASET_PORTION: [0, 0.8]
-    NUM_ITERATION: 60000
+    # 2681 + 671 = 3352
+    NUM_ITERATION: 26810
     # Number of batches in validation, according to split trn/val split [0.8, 0.2].
-    NUM_VALIDATION_ITERATIONS: 24
-    VALIDATION_FREQ: 500
-    NAN_CHECK_FREQ: 500
+    NUM_VALIDATION_ITERATIONS: 671
+    VALIDATION_FREQ: 268
+    NAN_CHECK_FREQ: 268
     RANDOM_NUM_VIEWS: False  # feed in random # views if n_views > 1
     RANDOM_VIEW_ORDER: False  # Keep view order fixzed.
     LOSS_LIMIT: 2  # stop training if the loss exceeds the limit
-    SAVE_FREQ: 500  # weights will be overwritten every save_freq
+    SAVE_FREQ: 268  # weights will be overwritten every save_freq
     PRINT_FREQ: 50
     # data_process.py: Number of renderings per model
     NUM_RENDERING: 5
@@ -48,7 +49,7 @@ TRAIN:
     POLICY: 'adam'  # def: sgd, adam
     # For SGD use 0.1, for ADAM, use 0.0001
     DEFAULT_LEARNING_RATE: 0.0001
-    LEARNING_RATES: {'20000': 0.00001, '60000': 0.000001}
+    LEARNING_RATES: {'16086': 0.00001, '21448': 0.000001}
     # DEFAULT_LEARNING_RATE: 0.1
     # LEARNING_RATES: {'20000': 0.01, '60000': 0.001}
 

@@ -17,7 +17,6 @@ DIR:
     RENDERING_PATH: './data/{0}/{1}'
 CONST:
     # Set batch size as argument to main.py (different in train/test)
-    # __C.CONST.BATCH_SIZE = 36
     # BATCH_SIZE: 36
     IMG_DEPTH: True
     IMG_W: 160
@@ -25,7 +24,19 @@ CONST:
     N_VOX: [32, 32, 32]
     # data_process.py: Number of views to be used, should be fixed and equal to the number of rendered depths.
     N_VIEWS: 5
+QUEUE_SIZE: 15
 TRAIN:
+    DATASET_PORTION: [0, 0.8]
+    NUM_ITERATION: 60000
+    # Number of batches in validation, according to split trn/val split [0.8, 0.2].
+    NUM_VALIDATION_ITERATIONS: 24
+    VALIDATION_FREQ: 500
+    NAN_CHECK_FREQ: 500
+    RANDOM_NUM_VIEWS: False  # feed in random # views if n_views > 1
+    RANDOM_VIEW_ORDER: False  # Keep view order fixzed.
+    LOSS_LIMIT: 2  # stop training if the loss exceeds the limit
+    SAVE_FREQ: 500  # weights will be overwritten every save_freq
+    PRINT_FREQ: 50
     # data_process.py: Number of renderings per model
     NUM_RENDERING: 5
     RANDOM_CROP: False
