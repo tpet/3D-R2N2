@@ -45,6 +45,9 @@ def test_net():
 
     # prepare result container
     results = {'cost': np.zeros(num_batch)}
+    if cfg.TEST.SAVE_PREDICTIONS:
+        results['label'] = []
+        results['prediction'] = []
     for thresh in cfg.TEST.VOXEL_THRESH:
         results[str(thresh)] = np.zeros((num_batch, batch_size, 5))
 
@@ -57,6 +60,11 @@ def test_net():
         pred, loss, activations = solver.test_output(batch_img, batch_voxel)
         print('%d/%d, cost is: %f' % (batch_idx, num_batch, loss))
 
+        if cfg.TEST.SAVE_PREDICTIONS:
+            # [example, spatial dim x, class 0/1, y, z]
+            results['label'].append(batch_voxel[:, :, 1, ...].flatten())
+            results['prediction'].append(pred[:, :, 1, ...].flatten())
+
         for i, thresh in enumerate(cfg.TEST.VOXEL_THRESH):
             for j in range(batch_size):
                 r = evaluate_voxel_prediction(pred[j, ...], batch_voxel[j, ...], thresh)
@@ -67,4 +75,9 @@ def test_net():
         batch_idx += 1
 
     print('Total loss: %f' % np.mean(results['cost']))
+
+    if cfg.TEST.SAVE_PREDICTIONS:
+        results['label'] = np.concatenate(results['label'])
+        results['prediction'] = np.concatenate(results['prediction'])
+
     sio.savemat(result_fn, results)
