@@ -1,0 +1,29 @@
+# Kitti dataset layout (symlinks to flat layout)
+# ./data/kitti/00001/label.binvox
+# ./data/kitti/00001/renderings.txt
+# ./data/kitti/00001/00.png
+# ./data/kitti/00001/01.png
+# ...
+# ./data/kitti/00005/label.binvox
+# ...
+DATASET: './experiments/dataset/kitti.json'
+DIR:
+    # data_io.py: Used with single category id 'kitti' (from kitti.json) to list examples ('00001' etc.).
+    SHAPENET_QUERY_PATH: './data/random_128'
+    VOXEL_PATH: './data/random_128/{0}/{1}/label.binvox'
+    RENDERING_PATH: './data/random_128/{0}/{1}'
+CONST:
+    # Set batch size as argument to main.py (different in train/test)
+    # BATCH_SIZE: 36
+    IMG_DEPTH: True
+    IMG_W: 160
+    IMG_H: 120
+    N_VOX: [128, 128, 32]
+    # data_process.py: Number of views to be used, should be fixed and equal to the number of rendered depths.
+    N_VIEWS: 5
+QUEUE_SIZE: 25
+TEST:
+    EXP_NAME: 'test'
+    DATASET_PORTION: [0.8819, 1]
+    SAVE_PREDICTIONS: True
+

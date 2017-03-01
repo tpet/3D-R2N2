@@ -1,0 +1,51 @@
+# Kitti dataset layout (symlinks to flat layout)
+# ./data/kitti/00001/label.binvox
+# ./data/kitti/00001/renderings.txt
+# ./data/kitti/00001/00.png
+# ./data/kitti/00001/01.png
+# ...
+# ./data/kitti/00005/label.binvox
+# ...
+DATASET: './experiments/dataset/kitti.json'
+DIR:
+    # data_io.py: Used with single category id 'kitti' (from kitti.json) to list examples ('00001' etc.).
+    SHAPENET_QUERY_PATH: './data/random_128'
+    VOXEL_PATH: './data/random_128/{0}/{1}/label.binvox'
+    RENDERING_PATH: './data/random_128/{0}/{1}'
+CONST:
+    # Set batch size as argument to main.py (different in train/test)
+    # BATCH_SIZE: 36
+    IMG_DEPTH: True
+    IMG_W: 160
+    IMG_H: 120
+    N_VOX: [128, 128, 32]
+    # data_process.py: Number of views to be used, should be fixed and equal to the number of rendered depths.
+    N_VIEWS: 5
+QUEUE_SIZE: 25
+TRAIN:
+    DATASET_PORTION: [0, 0.7638]
+    # trn 2560 + val 396
+    NUM_ITERATION: 25600
+    NUM_VALIDATION_ITERATIONS: 396
+    VALIDATION_FREQ: 512
+    NAN_CHECK_FREQ: 512
+    RANDOM_NUM_VIEWS: False  # feed in random # views if n_views > 1
+    RANDOM_VIEW_ORDER: False  # Keep view order fixzed.
+    LOSS_LIMIT: 2  # stop training if the loss exceeds the limit
+    SAVE_FREQ: 512  # weights will be overwritten every save_freq
+    PRINT_FREQ: 64
+    NUM_RENDERING: 5
+    RANDOM_CROP: False
+    PAD_X: 0
+    PAD_Y: 0
+    FLIP: False
+    MOMENTUM: 0.9
+    POLICY: 'adam'  # def: sgd, adam
+    # For SGD use 0.1, for ADAM, use 0.0001
+    DEFAULT_LEARNING_RATE: 0.0001
+    LEARNING_RATES: {'15360': 0.00001, '20480': 0.000001}
+TEST:
+    EXP_NAME: 'test'
+    DATASET_PORTION: [0.7638, 0.8819]
+    VOXEL_THRESH: [0.4]
+
