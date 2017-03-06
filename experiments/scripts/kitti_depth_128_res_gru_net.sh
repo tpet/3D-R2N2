@@ -11,8 +11,8 @@ EXP_DETAIL=kitti_depth_128
 OUT_PATH='./output/'$NET_NAME/$EXP_DETAIL
 LOG="$OUT_PATH/log.`date +'%Y-%m-%d_%H-%M-%S'`"
 
-CFG_TRN=experiments/cfgs/kitti_depth_trnval_128.yaml
-CFG_TST=experiments/cfgs/kitti_depth_tst_128.yaml
+CFG_TRN=experiments/cfgs/kitti_depth_128_trnval.yaml
+CFG_TST=experiments/cfgs/kitti_depth_128_tst.yaml
 
 # Make the dir if it not there
 mkdir -p $OUT_PATH

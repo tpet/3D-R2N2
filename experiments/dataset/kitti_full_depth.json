@@ -1,0 +1,6 @@
+{
+    "kitti_full_depth": {
+        "id": "kitti_full_depth",
+        "name": "kitti_full_depth"
+    }
+}

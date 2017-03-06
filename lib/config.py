@@ -78,7 +78,8 @@ __C.TRAIN.POLICY = 'adam'  # def: sgd, adam
 # The EasyDict can't use dict with integers as keys
 # __C.TRAIN.LEARNING_RATES = {'20000': 1e-5, '60000': 1e-6}
 # Subdir keys must match too!
-__C.TRAIN.LEARNING_RATES = {'16086': 0.00001, '21448': 0.000001}
+#__C.TRAIN.LEARNING_RATES = {'15360': 0.00001, '20480': 0.000001}
+__C.TRAIN.LEARNING_RATES = {}
 __C.TRAIN.MOMENTUM = 0.90
 # weight decay or regularization constant. If not set, the loss can diverge
 # after the training almost converged since weight can increase indefinitely
@@ -116,20 +117,24 @@ def _merge_a_into_b(a, b):
     for k, v in a.items():
         # a must specify keys that are in b
         if k not in b.keys():
-            raise KeyError('{} is not a valid config key'.format(k))
-
+            print('Using custom key {}'.format(k))
+            # raise KeyError('{} is not a valid config key'.format(k))
         # the types must match, too
-        if type(b[k]) is not type(v):
+        # if type(b[k]) is not type(v):
+        elif type(b[k]) is not type(v):
             raise ValueError(('Type mismatch ({} vs. {}) '
                               'for config key: {}').format(type(b[k]), type(v), k))
 
         # recursively merge dicts
         if type(v) is edict:
+            # Replace dicts, e.g. to allow changing learning rates in any iteration.
             try:
                 _merge_a_into_b(a[k], b[k])
             except:
                 print('Error under config key: {}'.format(k))
                 raise
+#            print('Replacing key {} with value: {}'.format(k, v))
+#            b[k] = v
         else:
             b[k] = v
 

@@ -53,26 +53,31 @@ def train_net():
     # since the queue will be popped every TRAIN.NUM_VALIDATION_ITERATIONS.
     global train_queue, val_queue, train_processes, val_processes
     train_queue = Queue(cfg.QUEUE_SIZE)
-    val_queue = Queue(cfg.QUEUE_SIZE)
-
+    if cfg.TRAIN.VALIDATION_FREQ == 0:
+        val_queue = None
+    else:
+        val_queue = Queue(cfg.QUEUE_SIZE)
+        
     train_processes = make_data_processes(
         train_queue,
         category_model_id_pair(dataset_portion=cfg.TRAIN.DATASET_PORTION),
         cfg.TRAIN.NUM_WORKER,
         repeat=True)
-    val_processes = make_data_processes(
-        val_queue,
-        category_model_id_pair(dataset_portion=cfg.TEST.DATASET_PORTION),
-        1,
-        repeat=True,
-        train=False)
+    if val_queue is not None:
+        val_processes = make_data_processes(
+            val_queue,
+            category_model_id_pair(dataset_portion=cfg.TEST.DATASET_PORTION),
+            1,
+            repeat=True,
+            train=False)
 
     # Train the network
     solver.train(train_queue, val_queue)
 
     # Cleanup the processes and the queue.
     kill_processes(train_queue, train_processes)
-    kill_processes(val_queue, val_processes)
+    if val_queue is not None:
+        kill_processes(val_queue, val_processes)
 
 
 def main():
